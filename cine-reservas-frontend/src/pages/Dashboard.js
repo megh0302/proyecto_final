@@ -83,7 +83,7 @@ function Dashboard() {
                                 <Button
                                     variant="contained"
                                     color="primary"
-                                    fullWidth
+                                    class="btn-reserve"
                                     onClick={() => navigate(`/reservation/${room.id}`)}
                                     sx={{ textTransform: 'none', fontWeight: 'bold' }}
                                 >
