@@ -10,3 +10,5 @@ router.put('/:id/capacity', [auth, admin], roomController.updateCapacity);
 router.get('/', roomController.getRooms);
 
 module.exports = router;
+
+

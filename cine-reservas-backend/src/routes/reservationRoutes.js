@@ -8,3 +8,4 @@ router.get('/:roomId/:date', auth, reservationController.getReservations);
 router.get('/all', auth, reservationController.getAllReservationsByDate);
 
 module.exports = router;
+

@@ -1,15 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Grid, Card, CardContent, CardMedia, Typography, Button } from '@mui/material';
+import { Grid, Card, CardContent, CardMedia, Typography, Button, Box } from '@mui/material';
 import axios from 'axios';
 
 function Dashboard() {
     const [rooms, setRooms] = useState([]);
     const [reservationsByRoom, setReservationsByRoom] = useState({});
-    const [currentDateTime, setCurrentDateTime] = useState(new Date());
     const navigate = useNavigate();
 
-    // Obtener la fecha de mañana
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
     const tomorrowDate = tomorrow.toISOString().split('T')[0];
@@ -17,13 +15,11 @@ function Dashboard() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                // Obtener salas
                 const roomsResponse = await axios.get(`${process.env.REACT_APP_API_URL}/rooms`, {
                     headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
                 });
                 setRooms(roomsResponse.data);
 
-                // Obtener reservas para cada sala
                 const reservationsData = {};
                 for (const room of roomsResponse.data) {
                     try {
@@ -35,7 +31,7 @@ function Dashboard() {
                         );
                         reservationsData[room.id] = reservationsResponse.data;
                     } catch (error) {
-                        reservationsData[room.id] = []; // Si no hay reservas, asumir 0
+                        reservationsData[room.id] = [];
                     }
                 }
                 setReservationsByRoom(reservationsData);
@@ -52,14 +48,6 @@ function Dashboard() {
         fetchData();
     }, [navigate, tomorrowDate]);
 
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setCurrentDateTime(new Date());
-        }, 1000); // Actualizar cada segundo
-        return () => clearInterval(interval); // Limpiar intervalo al desmontar
-    }, []);
-
-    // Calcular asientos disponibles para una sala
     const getAvailableSeats = (room) => {
         const totalSeats = room.seat_rows * room.seat_columns;
         const reservedSeats = (reservationsByRoom[room.id] || []).length;
@@ -67,18 +55,38 @@ function Dashboard() {
     };
 
     return (
-        <div>
-            
-            <Grid container spacing={2} sx={{ p: 4 }}>
+        <Box sx={{ backgroundColor: '#f5f5f5', minHeight: '100vh', py: 4, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <Typography variant="h4" align="center" gutterBottom sx={{ fontWeight: 'bold', mb: 4 }}>
+                Dashboard - Movie Reservations
+            </Typography>
+            <Grid container spacing={4} sx={{ px: 4, justifyContent: 'center' }}>
                 {rooms.map((room) => (
-                    <Grid item xs={12} sm={6} md={4} key={room.id}>
+                    <Grid item xs={12} sm={6} md={3} key={room.id}>
                         <Card class="card">
-                            <CardMedia component="img" height="140" image={room.movie_poster} alt={room.movie_title} />
+                            <CardMedia
+                                component="img"
+                                height="200"
+                                image={room.movie_poster}
+                                alt={room.movie_title}
+                                sx={{ objectFit: 'cover' }}
+                            />
                             <CardContent>
-                                <Typography variant="h5">{room.movie_title}</Typography>
-                                <Typography>Room: {room.name}</Typography>
-                                <Typography>Available Seats: {getAvailableSeats(room)}</Typography>
-                                <Button variant="contained" onClick={() => navigate(`/reservation/${room.id}`)}>
+                                <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 1 }}>
+                                    {room.movie_title}
+                                </Typography>
+                                <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
+                                    Room: {room.name}
+                                </Typography>
+                                <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+                                    Available Seats: {getAvailableSeats(room)}
+                                </Typography>
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    fullWidth
+                                    onClick={() => navigate(`/reservation/${room.id}`)}
+                                    sx={{ textTransform: 'none', fontWeight: 'bold' }}
+                                >
                                     Reserve
                                 </Button>
                             </CardContent>
@@ -86,7 +94,7 @@ function Dashboard() {
                     </Grid>
                 ))}
             </Grid>
-        </div>
+        </Box>
     );
 }
 
