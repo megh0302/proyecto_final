@@ -36,3 +36,16 @@ exports.getReservations = async (req, res) => {
         res.status(500).json({ message: 'Server error' });
     }
 };
+
+exports.getAllReservationsByDate = async (req, res) => {
+    const { date } = req.query;
+    try {
+        const [reservations] = await pool.query(
+            'SELECT room_id, seat_row, seat_column FROM Reservations WHERE date = ?',
+            [date]
+        );
+        res.status(200).json(reservations);
+    } catch (error) {
+        res.status(500).json({ message: 'Server error' });
+    }
+};

@@ -5,5 +5,6 @@ const auth = require('../middleware/auth');
 
 router.post('/', auth, reservationController.createReservation);
 router.get('/:roomId/:date', auth, reservationController.getReservations);
+router.get('/all', auth, reservationController.getAllReservationsByDate);
 
 module.exports = router;
