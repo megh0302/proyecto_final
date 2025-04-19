@@ -35,6 +35,10 @@ function Navbar() {
                                 {currentDateTime.toLocaleString()}
                             </Typography>
                         </div>
+                        {/* dasboard */}
+                        <Button color="inherit" onClick={() => navigate('/dashboard')}>
+                            Dashboard
+                        </Button>
                         {localStorage.getItem('role') === 'admin' && (
                             <Button color="inherit" onClick={() => navigate('/admin/rooms')}>
                                 Manage Rooms

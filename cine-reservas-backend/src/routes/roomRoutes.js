@@ -8,6 +8,7 @@ router.post('/', [auth, admin], roomController.createRoom);
 router.put('/:id', [auth, admin], roomController.updateRoom);
 router.put('/:id/capacity', [auth, admin], roomController.updateCapacity);
 router.get('/', roomController.getRooms);
+router.delete('/:id', auth, admin, roomController.deleteRoom);
 
 module.exports = router;
 
