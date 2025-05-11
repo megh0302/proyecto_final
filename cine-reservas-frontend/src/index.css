@@ -17,7 +17,6 @@ code {
   border-radius: 4px;
 }
 
-/* Tarjeta principal con ancho fijo */
 .card {
   display: flex;
   flex-direction: column;
@@ -26,17 +25,83 @@ code {
   margin: 40px auto;
   padding: 32px;
   width: 400px;
-  background-color: #ffffff; /* Clean white */
-  border: 1px solid #d1d5db; /* Light gray border */
+  background-color: #ffffff;
+  /* Clean white */
+  border: 2px solid transparent;
+  /* Borde transparente para el glow */
   border-radius: 20px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05); /* Softer shadow */
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15),
+    /* Sombra profunda */
+    0 0 15px rgba(59, 130, 246, 0.6),
+    /* Contorno brillante azul */
+    inset 0 0 8px rgba(255, 255, 255, 0.3);
+  /* Brillo interno */
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
-.card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1); /* Slightly stronger shadow */
+/* Variante con contorno verde (descomenta para usar en lugar del azul) */
+.card.green-glow {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15),
+    0 0 15px rgba(34, 197, 94, 0.6),
+    /* Contorno brillante verde */
+    inset 0 0 8px rgba(255, 255, 255, 0.3);
 }
+
+/* Efecto hover para intensificar el brillo */
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2),
+    /* Sombra más intensa */
+    0 0 25px rgba(59, 130, 246, 0.8),
+    /* Brillo azul más fuerte */
+    inset 0 0 12px rgba(255, 255, 255, 0.5);
+  border: 2px solid rgba(59, 130, 246, 0.5);
+  /* Borde azul brillante */
+}
+
+/* Hover para la variante verde */
+.card.green-glow:hover {
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2),
+    0 0 25px rgba(34, 197, 94, 0.8),
+    /* Brillo verde más fuerte */
+    inset 0 0 12px rgba(255, 255, 255, 0.5);
+  border: 2px solid rgba(34, 197, 94, 0.5);
+  /* Borde verde brillante */
+}
+
+/* Efecto de brillo dinámico */
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg,
+      transparent,
+      rgba(59, 130, 246, 0.4),
+      /* Brillo azul dinámico */
+      transparent);
+  transition: left 0.5s ease;
+}
+
+/* Brillo dinámico para la variante verde */
+.card.green-glow::before {
+  background: linear-gradient(90deg,
+      transparent,
+      rgba(34, 197, 94, 0.4),
+      /* Brillo verde dinámico */
+      transparent);
+}
+
+.card:hover::before,
+.card.green-glow:hover::before {
+  left: 100%;
+  /* Mueve el brillo al hacer hover */
+}
+
 
 /* Imagen */
 .card img {
