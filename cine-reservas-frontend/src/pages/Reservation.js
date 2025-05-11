@@ -12,7 +12,7 @@ function Reservation() {
     const [selectedSeats, setSelectedSeats] = useState([]);
     const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
     const [openModal, setOpenModal] = useState(false);
-    const [cardDetails, setCardDetails] = useState({ name: '', number: '', expiry: '', cvv: '' });
+    const [cardDetails, setCardDetails] = useState({ number: '', expiry: '', cvv: '' });
 
     useEffect(() => {
         const fetchRoom = async () => {
@@ -125,13 +125,6 @@ function Reservation() {
             <Modal open={openModal} onClose={() => setOpenModal(false)}>
                 <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', bgcolor: 'white', p: 4, borderRadius: 2 }}>
                     <Typography variant="h6">Enter Card Details</Typography>
-                    <TextField
-                        label="Card Name"
-                        fullWidth
-                        margin="normal"
-                        value={cardDetails.name}
-                        onChange={(e) => setCardDetails({ ...cardDetails, name: e.target.value })}
-                    />
                     <TextField
                         label="Card Number"
                         fullWidth
