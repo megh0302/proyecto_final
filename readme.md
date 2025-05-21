@@ -9,7 +9,7 @@ A web application for managing cinema seat reservations.
 2. Run `npm install`.
 3. Create a `.env` file with the required variables.
 4. Execute the SQL script: `mysql -u root -p < init.sql`.
-5. Start the server: `npm run dev`.
+5. Start the server: `npm run start`.
 
 ### Frontend
 1. Navigate to `/frontend`.
