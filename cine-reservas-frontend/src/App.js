@@ -4,6 +4,7 @@ import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import RoomManagement from './pages/RoomManagement';
 import Reservation from './pages/Reservation';
+import ReportPage from './pages/ReportPage';
 import Navbar from './components/Navbar';
 import { Box } from '@mui/material';
 
@@ -17,6 +18,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/admin/rooms" element={<RoomManagement />} />
+          <Route path="/admin/report" element={<ReportPage />} />
           <Route path="/reservation/:roomId" element={<Reservation />} />
         </Routes>
       </Box>

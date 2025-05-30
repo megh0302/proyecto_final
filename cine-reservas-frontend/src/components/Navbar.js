@@ -66,6 +66,15 @@ function Navbar() {
                                 Administrar Salas
                             </Button>
                         )}
+                        {role === 'admin' && (
+                            <Button
+                                variant="text"
+                                onClick={() => navigate('/admin/report')}
+                                sx={{ fontWeight: 500 }}
+                            >
+                                Reporte
+                            </Button>
+                        )}
 
                         <Button
                             variant="outlined"
